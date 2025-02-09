@@ -1,7 +1,8 @@
 import React from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
-import "./ResultDisplay.css"; // ✅ Import CSS file for styling
+import rehypeRaw from "rehype-raw";
+import "./ResultDisplay.css"; 
 
 function ResultDisplay({ sessionData, onNewSession }) {
   return (
@@ -20,7 +21,11 @@ function ResultDisplay({ sessionData, onNewSession }) {
 
       {/* Fitness Analysis */}
       <section className="markdown-section">
-        <ReactMarkdown className="markdown-content" remarkPlugins={[remarkGfm]}>
+        <ReactMarkdown
+          className="markdown-content"
+          remarkPlugins={[remarkGfm]}
+          rehypePlugins={[rehypeRaw]}
+        >
           {sessionData.fitness_analysis}
         </ReactMarkdown>
       </section>
@@ -28,7 +33,11 @@ function ResultDisplay({ sessionData, onNewSession }) {
       {/* Workout Plan */}
       <section className="markdown-section">
         <h3>Workout Plan</h3>
-        <ReactMarkdown className="markdown-content" remarkPlugins={[remarkGfm]}>
+        <ReactMarkdown
+          className="markdown-content"
+          remarkPlugins={[remarkGfm]}
+          rehypePlugins={[rehypeRaw]}
+        >
           {sessionData.workout_plan}
         </ReactMarkdown>
       </section>
@@ -36,7 +45,11 @@ function ResultDisplay({ sessionData, onNewSession }) {
       {/* Nutrition Tips */}
       <section className="markdown-section">
         <h3>Nutrition Tips</h3>
-        <ReactMarkdown className="markdown-content" remarkPlugins={[remarkGfm]}>
+        <ReactMarkdown
+          className="markdown-content"
+          remarkPlugins={[remarkGfm]}
+          rehypePlugins={[rehypeRaw]}
+        >
           {sessionData.nutrition_tips}
         </ReactMarkdown>
       </section>
