@@ -3,6 +3,10 @@
    ================================ */
 
 /* Main Result Container */
+*{
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
 .result-container {
     width: 100%;
     max-width: 900px;
@@ -16,7 +20,7 @@
   /* Header Section */
   .result-header {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center;
     background: #f4f7fc;
     padding: 1rem;
@@ -25,6 +29,7 @@
   }
   
   .session-id {
+    display: none;
     font-size: 1.2rem;
     font-weight: 600;
     color: #333;
@@ -41,6 +46,7 @@
     border-radius: 6px;
     cursor: pointer;
     transition: background 0.3s ease-in-out;
+
   }
   
   .new-session-button:hover {
@@ -49,16 +55,19 @@
   
   /* Info Section */
   .info-section {
-    margin-top: 1.5rem;
-    padding: 1rem;
+    padding: 0.5rem;
     background: #f9f9f9;
     border-radius: 6px;
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.05);
   }
+
+  .info-section>p:last-child{
+    display: none;
+  }
   
   /* Markdown Content Styling */
   .markdown-section {
-    margin-top: 2rem;
+    margin-top: 0.2rem;
     padding: 1.5rem;
     background: #ffffff;
     border-radius: 6px;
@@ -73,6 +82,13 @@
     color: #2d3a4a;
     border-bottom: 2px solid #e6e6e6;
     padding-bottom: 0.4rem;
+    text-align: left;
+  }
+
+  .markdown-section p{
+    font-size: 1.1rem;
+    color: #2d3a4a;
+    text-align: left;
   }
   
   /* Markdown Tables */
