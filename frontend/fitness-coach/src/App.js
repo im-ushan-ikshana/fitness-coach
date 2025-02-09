@@ -80,9 +80,6 @@ function App() {
   if (!sessionData) {
     return (
       <div className="app-container">
-        <header className="header">
-          <h2 className="header-title">Workout Plan Generator</h2>
-        </header>
 
         <div className="main-content">
           <h1>Generate Your Workout Plan</h1>
