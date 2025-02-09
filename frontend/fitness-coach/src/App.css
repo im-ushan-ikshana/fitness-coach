@@ -21,18 +21,8 @@
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-/* Header Section */
-.header {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  max-width: 700px;
-  background: #ffffff;
-  padding: 1rem 2rem;
-  border-radius: 8px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.05);
-  margin-bottom: 1.5rem;
+.main-content p{
+  margin-bottom: 1rem;
 }
 
 /* Header Title */
