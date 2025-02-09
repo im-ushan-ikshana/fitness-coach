@@ -108,11 +108,6 @@ function App() {
   // If we have sessionData, show the results
   return (
     <div className="app-container">
-      <header className="header">
-        <h2 className="header-title">Session ID: {sessionData.session_id}</h2>
-        <button onClick={handleNewSession}>New Session</button>
-      </header>
-
       <div className="main-content">
         <ResultDisplay
           sessionData={sessionData}
