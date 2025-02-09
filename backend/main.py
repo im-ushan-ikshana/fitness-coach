@@ -16,6 +16,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from dotenv import load_dotenv
 load_dotenv()
 
+print("API Key:", os.getenv("OPENAI_API_KEY")) 
+
 # Initialize FastAPI
 app = FastAPI()
 
