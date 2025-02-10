@@ -5,7 +5,7 @@
   align-items: center;
   justify-content: center;
   min-height: 100vh;
-  background-color: #f4f7fc;
+  background: linear-gradient(45deg, #7800f8, #00102b);
   font-family: "Poppins", sans-serif;
   color: #333;
   padding: 2rem;
@@ -14,7 +14,7 @@
 /* Content Wrapper */
 .main-content {
   width: 100%;
-  max-width: 1200px;
+  max-width: 100vw;
   background: #ffffff;
   padding: 2rem;
   border-radius: 8px;
