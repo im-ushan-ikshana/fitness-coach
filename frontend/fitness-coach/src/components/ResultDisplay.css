@@ -1,177 +1,143 @@
-/* ================================
-   ResultDisplay.css - Styling for the Result Display Component
-   ================================ */
+/* ResultDisplay.css */
 
-/* Global Styles */
-* {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+/* Import custom font Poppins for this component */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap');
 
-/* Main Result Container */
+/* Container for the result display, aligned left */
 .result-container {
-  width: 100%;
-  max-width: 900px;
-  margin: 2rem auto;
-  background: #ffffff;
-  padding: 2rem;
-  border-radius: 12px;
-  box-shadow: 0px 6px 14px rgba(0, 0, 0, 0.1);
+  max-width: 800px;
+  margin: 0;  /* Left-align the container */
+  padding: 0 30px 0 8px;
+  font-family: 'Poppins', sans-serif;
+  color: #333;
+  text-align: left;
+  background-color: #ffffff;
+  border-right: 1px solid #ccc; 
 }
 
-/* Header Section */
+/* Header styling with flexible layout */
 .result-header {
   display: flex;
-  justify-content: flex-end;
+  flex-wrap: wrap;
+  justify-content: space-between;
   align-items: center;
-  background: #f4f7fc;
-  padding: 1rem;
-  border-radius: 8px;
-  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.05);
+  margin-bottom: 16px;
 }
 
+/* Session ID: lower-case and light gray font */
 .session-id {
-  display: none;
-  font-size: 1.2rem;
-  font-weight: 600;
-  color: #333;
+  font-size: 0.8rem;
+  font-weight: 500;
+  margin: 0;
+  text-transform: lowercase;
+  color: #aaa;
 }
 
-/* New Session Button */
+/* New Session button with gradient background */
 .new-session-button {
-  background: linear-gradient(135deg, #6a89cc, #4a69bd);
-  color: white;
-  font-size: 1rem;
-  font-weight: 600;
-  padding: 0.8rem 1.5rem;
+  background: linear-gradient(45deg, #6a11cb, #2575fc);
+  color: #fff;
+  padding: 8px 16px;
   border: none;
-  border-radius: 8px;
+  border-radius: 4px;
   cursor: pointer;
-  transition: all 0.3s ease-in-out;
+  font-size: 14px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  margin-top: 8px; /* Spacing when header wraps on mobile */
 }
 
+/* Button hover effects */
 .new-session-button:hover {
-  background: linear-gradient(135deg, #4a69bd, #3b5998);
   transform: scale(1.05);
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
-/* Info Section */
+/* Info section styling */
 .info-section {
-  padding: 0.8rem;
-  background: #f9f9f9;
-  border-radius: 8px;
-  box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.05);
+  background-color: #e9e9e9;
+  padding: 12px;
+  border-radius: 4px;
+  margin-bottom: 16px;
 }
 
-.info-section > p:last-child {
-  display: none;
+.info-section p {
+  margin: 8px 0;
+  font-size: 14px;
+  text-align: left;
 }
 
-/* Markdown Content Styling */
+.info-section p:last-child{
+    display: none;
+}
+
+/* Markdown sections styling */
 .markdown-section {
-  margin-top: 0.5rem;
-  padding: 1.8rem;
-  background: #ffffff;
-  border-radius: 8px;
-  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.08);
+  margin-bottom: 24px;
+  overflow-x: auto; /* Allows horizontal scrolling for wide content/tables */
 }
 
-/* Markdown Headings */
-.markdown-section h3 {
-  font-size: 1.5rem;
-  font-weight: 600;
-  margin-bottom: 1rem;
-  color: #2d3a4a;
-  border-bottom: 2px solid #dfe6e9;
-  padding-bottom: 0.4rem;
+.markdown-section p{
+    text-align: left;
+}
+
+/* Headings inside markdown sections: left aligned */
+.markdown-section h3, h2 {
+  font-size: 1.2rem;
+  margin-bottom: 12px;
   text-align: left;
 }
 
-.markdown-section p {
-  margin-bottom: 0.2rem;
-  font-size: 1.1rem;
-  color: #2d3a4a;
-  text-align: left;
+
+
+/* Markdown content general styling */
+.markdown-content {
+  font-size: 14px;
+  line-height: 1.6;
 }
 
-/* Markdown Tables */
+/* Table styling inside markdown content */
 .markdown-content table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 1rem;
-  background-color: #f8f9fa;
-  border-radius: 8px;
-  overflow: hidden;
+  margin: 16px 0;
+  display: block; /* enables horizontal scrolling on small screens */
 }
 
-/* Table Headers with a Softer Green Color */
-.markdown-content th {
-  background-color: #81c784; /* Soft Green */
-  color: white;
-  font-weight: bold;
-  padding: 1.2rem;
-  text-align: left;
-  border: 1px solid #dfe6e9;
-}
-
-/* Table Rows */
+.markdown-content th,
 .markdown-content td {
-  padding: 1.2rem; /* Increased padding for better line spacing */
-  border: 1px solid #dfe6e9;
+  border: 1px solid #ddd;
+  padding: 8px;
   text-align: left;
-  background: #ffffff;
-  line-height: 1.8; /* Increased line spacing */
+  transition: background-color 0.3s ease;
 }
 
-/* Alternate Row Colors */
-.markdown-content tr:nth-child(even) {
-  background-color: #ecf0f1;
+.markdown-content th {
+  background-color: #f1f1f1;
+  font-weight: 500;
 }
 
-/* Hover Effect for Table Rows */
+/* Table row hover effect */
 .markdown-content tr:hover {
-  background-color: #e0f7fa; /* Soft Cyan when hovered */
-  transition: background 0.3s ease-in-out;
+  background-color: #f2f2f2;
 }
 
-/* Adjusting Row Spacing */
-.markdown-content tr {
-  height: 58px; /* Increased height for more vertical spacing */
-}
+/* Responsive adjustments */
 
-/* Code Blocks */
-.markdown-content pre {
-  background-color: #f5f5f5;
-  padding: 1.2rem;
-  border-radius: 8px;
-  overflow-x: auto;
-}
-
-.markdown-content code {
-  font-family: "Fira Code", monospace;
-  color: #d63031;
-  background-color: #f9f2f4;
-  padding: 0.3rem 0.5rem;
-  border-radius: 5px;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-  .result-container {
-    width: 90%;
-    padding: 1.5rem;
-  }
-
+/* Mobile devices: header elements stack and button is full width */
+@media (max-width: 600px) {
   .result-header {
     flex-direction: column;
-    text-align: center;
-    gap: 1rem;
+    align-items: flex-start;
   }
-
   .new-session-button {
     width: 100%;
+    text-align: center;
+  }
+}
+
+/* Medium devices: button remains auto width */
+@media (min-width: 601px) and (max-width: 900px) {
+  .new-session-button {
+    width: auto;
   }
 }
