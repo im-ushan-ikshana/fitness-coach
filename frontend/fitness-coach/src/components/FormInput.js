@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Lottie from "react-lottie";
-import loadingAnimation from "../assets/loading.json"; 
+import loadingAnimation from "../assets/loading_2.json"; 
 import "./FormInput.css"; 
 
 function FormInput({ formData, onChange, onSubmit, loading }) {
