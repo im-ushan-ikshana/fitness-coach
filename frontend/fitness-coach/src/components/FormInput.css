@@ -1,168 +1,145 @@
-/* ================================
-   FormInput.css - Modern Form Styling
-   ================================ */
+/* FormInput.css */
 
-/* Form Container */
+/* Import custom font Poppins for this component */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700&display=swap');
+
+/* Form Container Grid Layout */
 .form-container {
-  width: 100%;
-  max-width: 500px;
-  background: #ffffff;
-  padding: 2rem;
-  border-radius: 12px;
-  box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.15);
-  display: flex;
-  flex-direction: column;
-  gap: 1.4rem;
-  margin: 0 auto;
-  animation: fadeIn 0.3s ease-in-out;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  font-family: 'Poppins', sans-serif;
 }
 
-/* Label Styling */
+/* Responsive grid: 2 columns on medium screens, 3 on large screens */
+@media (min-width: 600px) {
+  .form-container {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 900px) {
+  .form-container {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Form Label Styling */
 .form-label {
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: #2d2d2d;
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
-}
-
-/* Input Fields */
-.form-input,
-.form-select {
-  width: 100%;
-  padding: 0.9rem;
-  font-size: 1.1rem;
-  border: 1px solid #d1d9e6; /* Softer border */
-  border-radius: 10px;
-  background-color: #f8f9fc; /* Lighter background */
-  transition: all 0.3s ease-in-out;
+  font-size: 14px;
   color: #333;
 }
 
-/* Focus Effect for Inputs */
+/* Input and Select Styling */
+.form-input,
+.form-select {
+  padding: 8px;
+  margin-top: 4px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Focus States for Better UX */
 .form-input:focus,
 .form-select:focus {
-  border-color: #6c5ce7; /* Soft purple on focus */
+  border-color: #007BFF;
+  box-shadow: 0 0 4px rgba(0, 123, 255, 0.5);
   outline: none;
-  box-shadow: 0px 0px 8px rgba(108, 92, 227, 0.4); /* Slight glowing effect */
-  background-color: #ffffff; /* White background on focus */
-  transform: scale(1.02); /* Slight increase on focus */
 }
 
-/* Submit Button */
+/* Submit Button Styling with Gradient */
 .form-button {
-  width: 100%;
-  background: linear-gradient(135deg, #6c5ce7, #4834d4); /* Gradient effect */
-  color: white;
-  font-size: 1.1rem;
-  font-weight: 600;
-  padding: 1rem;
+  background: linear-gradient(45deg, #6a11cb, #2575fc);
+  color: #fff;
+  padding: 10px 16px;
   border: none;
-  border-radius: 10px;
+  border-radius: 4px;
+  font-size: 16px;
   cursor: pointer;
-  transition: all 0.3s ease-in-out;
-  margin-top: 1.2rem;
+  transition: background 0.3s ease, transform 0.2s ease;
+  margin-top: 8px;
+  /* Mobile default: full width */
+  width: 100%;
+  justify-self: stretch;
 }
 
-.form-button:hover {
-  background: linear-gradient(135deg, #5a4fcf, #3a2dc5); /* Darker shade on hover */
-  transform: scale(1.05);
-  box-shadow: 0px 5px 12px rgba(108, 92, 227, 0.4);
+/* Hover and Focus Effects for Button */
+.form-button:hover:not(:disabled) {
+  transform: scale(1.02);
 }
 
-/* Disabled Button Styling */
+.form-button:focus {
+  outline: none;
+  box-shadow: 0 0 4px rgba(0, 123, 255, 0.6);
+}
+
 .form-button:disabled {
-  background: #dfe4ea;
+  background: linear-gradient(45deg, #aaa, #888);
   cursor: not-allowed;
-  transform: scale(1);
-  box-shadow: none;
 }
 
-/* Modal Overlay */
+/* Adjust Button Alignment on Larger Screens */
+@media (min-width: 600px) {
+  .form-button {
+    width: auto;
+    justify-self: end;
+  }
+}
+
+/* Modal Overlay for Submission Feedback */
 .modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.65);
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 1000;
-  animation: fadeIn 0.3s ease-in-out;
+  z-index: 9999;
 }
 
-/* Modal Content */
+/* Modal Content Styling with Fade-in Animation */
 .modal-content {
-  background: white;
-  padding: 3rem;
-  border-radius: 14px;
+  background-color: #fff;
+  padding: 24px;
+  border-radius: 8px;
   text-align: center;
-  box-shadow: 0px 12px 30px rgba(0, 0, 0, 0.35);
-  animation: scaleUp 0.3s ease-in-out;
-  width: 350px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  animation: fadeIn 0.3s ease-out;
 }
 
-/* Blinking Text for "Generating Your Plan..." */
-.modal-text {
-  font-size: 1.4rem;
-  font-weight: 700;
-  margin-top: 1.5rem;
-  color: #333;
-  animation: blink 1s infinite;
-}
-
-/* Animations */
+/* Fade-In Keyframes */
 @keyframes fadeIn {
   from {
     opacity: 0;
+    transform: scale(0.8);
   }
   to {
     opacity: 1;
-  }
-}
-
-@keyframes scaleUp {
-  from {
-    transform: scale(0.9);
-  }
-  to {
     transform: scale(1);
   }
 }
 
-/* Blinking Animation */
-@keyframes blink {
-  50% {
-    opacity: 0.3;
-  }
+/* Modal Text Styling */
+.modal-text {
+  margin-top: 16px;
+  font-size: 18px;
+  color: #333;
 }
 
-/* Responsive Design */
-@media (max-width: 600px) {
-  .form-container {
-    width: 90%;
-    padding: 1.8rem;
-  }
+/* Blinking Animation for Modal Text */
+.blink {
+  animation: blinkAnimation 1s step-start infinite;
+}
 
-  .form-button {
-    font-size: 1rem;
-  }
-
-  .form-input,
-  .form-select {
-    font-size: 1rem;
-    padding: 0.8rem;
-  }
-
-  .modal-content {
-    padding: 2rem;
-    width: 80%;
-  }
-
-  .modal-text {
-    font-size: 1.2rem;
+@keyframes blinkAnimation {
+  50% {
+    opacity: 0;
   }
 }
