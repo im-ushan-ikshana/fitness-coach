@@ -193,3 +193,5 @@ async def clear_session(session_id: str):
     """Clear user session data."""
     session_manager.delete_session(session_id)
     return {"message": "Session cleared", "session_id": session_id}
+
+
