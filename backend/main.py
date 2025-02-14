@@ -1,5 +1,6 @@
 from fastapi import FastAPI, HTTPException, Header, Path
 from pydantic import BaseModel
+from typing import List, Optional
 
 import os
 import asyncio
@@ -9,6 +10,8 @@ from backend.models.RuleBasedRecommender import RuleBasedRecommender
 from backend.nlp.GPTWorkoutGenerator import GPTWorkoutGenerator
 from backend.utils.SessionManager import SessionManager
 from backend.nlp.PromptTemplates import PromptTemplates
+from backend.models.youtube_search import YouTubeSearch
+
 
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -195,3 +198,64 @@ async def clear_session(session_id: str):
     return {"message": "Session cleared", "session_id": session_id}
 
 
+class YouTubeSearchRequest(BaseModel):
+    query: str
+    max_results: Optional[int] = 5
+    video_duration: Optional[str] = 'medium'
+    relevance_keywords: Optional[List[str]] = None
+
+@app.post("/youtube-search")
+async def search_workout_videos(
+    search_request: YouTubeSearchRequest,
+    session_id: str = Header(default=None)
+):
+    """
+    Search for workout videos on YouTube based on user preferences and session data.
+    """
+    try:
+        # Initialize YouTube search
+        youtube_search = YouTubeSearch()
+        
+        # If session exists, enhance search with user preferences
+        if session_id:
+            session_data = session_manager.get_session(session_id)
+            if session_data:
+                # Add relevant keywords based on user preferences
+                relevance_keywords = [
+                    session_data.get('fitness_goal', ''),
+                    session_data.get('experience_level', ''),
+                    session_data.get('workout_preference', '')
+                ]
+                # Filter out empty strings
+                relevance_keywords = [kw for kw in relevance_keywords if kw]
+                if relevance_keywords:
+                    search_request.relevance_keywords = relevance_keywords
+
+        # Perform search
+        videos = await youtube_search.search_workout_videos(
+            query=search_request.query,
+            max_results=search_request.max_results,
+            relevance_keywords=search_request.relevance_keywords,
+            video_duration=search_request.video_duration
+        )
+
+        return {
+            "session_id": session_id,
+            "videos": videos
+        }
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error searching YouTube: {str(e)}")
+
+@app.get("/youtube-video/{video_id}")
+async def get_video_details(video_id: str):
+    """
+    Get detailed information about a specific YouTube video.
+    """
+    try:
+        youtube_search = YouTubeSearch()
+        video_details = await youtube_search.get_video_details(video_id)
+        return video_details
+
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Error fetching video details: {str(e)}")
