@@ -20,6 +20,15 @@
 .custom-chat-container{
   padding: 2rem;
   padding-top: 0;
+  padding-right: 0;
+  display: flexbox;
+  flex-direction: row;
+  width: 100%;
+  justify-content: center;
+}
+
+.youtube-video-container{
+  padding: 2rem;
   display: flexbox;
   width: 100%;
   justify-content: center;

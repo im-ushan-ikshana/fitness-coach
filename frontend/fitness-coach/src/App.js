@@ -6,6 +6,7 @@ import "./App.css"; // ✅ Import the CSS file
 import FormInput from "./components/FormInput";
 import ResultDisplay from "./components/ResultDisplay";
 import CustomChat from "./components/customChat";
+import YoutubeVideo from "./components/YoutubeVideo";
 
 function App() {
   // ------------------------
@@ -44,14 +45,26 @@ function App() {
     setLoading(true);
 
     try {
-      const response = await axios.post("http://127.0.0.1:8000/generate-workout", formData);
-      setSessionData(response.data);
+      const response = await axios.post(
+        "http://127.0.0.1:8000/generate-workout",
+        formData
+      );
+      // Merge formData and response data into one object
+    setSessionData({
+      ...formData, // Spread formData fields
+      ...response.data, // Spread API response fields
+    });
     } catch (error) {
       console.error("Error generating workout:", error);
       alert("An error occurred while generating the workout plan.");
     } finally {
       setLoading(false);
     }
+  };
+
+  const [selectedExercise, setSelectedExercise] = useState(null);
+  const handleExerciseSelect = (exercise) => {
+    setSelectedExercise(exercise);
   };
 
   const handleNewSession = () => {
@@ -70,6 +83,7 @@ function App() {
       experience_level: "",
     });
     setSessionData(null);
+    setSelectedExercise(null);
     setLoading(false);
   };
 
@@ -81,10 +95,12 @@ function App() {
   if (!sessionData) {
     return (
       <div className="app-container">
-
         <div className="main-content">
           <h1>Generate Your Workout Plan</h1>
-          <p>Fill out the form below to get a personalized workout and nutrition plan.</p>
+          <p>
+            Fill out the form below to get a personalized workout and nutrition
+            plan.
+          </p>
 
           <FormInput
             formData={formData}
@@ -95,7 +111,9 @@ function App() {
 
           {loading && (
             <div className="loading-container">
-              <p className="loading-text">Generating your plan... Please wait.</p>
+              <p className="loading-text">
+                Generating your plan... Please wait.
+              </p>
             </div>
           )}
         </div>
@@ -107,20 +125,22 @@ function App() {
   return (
     <div className="app-container">
       <div className="main-inner-container">
-      <div className="main-content">
-        <ResultDisplay
-          sessionData={sessionData}
-          onNewSession={handleNewSession}
-        />
-        
-      </div>
-      <div className="custom-chat-container">
+        <div className="main-content">
+          <ResultDisplay
+            sessionData={sessionData}
+            onNewSession={handleNewSession}
+            onExerciseSelect={handleExerciseSelect}
+          />
+        </div>
+        <div className="custom-chat-container">
           <CustomChat sessionId={sessionData.session_id} />
+          <YoutubeVideo
+            sessionData={sessionData}
+            selectedExercise={selectedExercise}
+          />
         </div>
       </div>
     </div>
-
-
   );
 }
 
