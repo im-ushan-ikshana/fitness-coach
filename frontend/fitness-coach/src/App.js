@@ -5,6 +5,7 @@ import "./App.css"; // ✅ Import the CSS file
 // Import our separate components
 import FormInput from "./components/FormInput";
 import ResultDisplay from "./components/ResultDisplay";
+import CustomChat from "./components/customChat";
 
 function App() {
   // ------------------------
@@ -105,13 +106,21 @@ function App() {
   // If we have sessionData, show the results
   return (
     <div className="app-container">
+      <div className="main-inner-container">
       <div className="main-content">
         <ResultDisplay
           sessionData={sessionData}
           onNewSession={handleNewSession}
         />
+        
+      </div>
+      <div className="custom-chat-container">
+          <CustomChat sessionId={sessionData.session_id} />
+        </div>
       </div>
     </div>
+
+
   );
 }
 
