@@ -51,8 +51,8 @@ function App() {
       );
       // Merge formData and response data into one object
     setSessionData({
-      ...formData, // Spread formData fields
-      ...response.data, // Spread API response fields
+      ...formData, 
+      ...response.data,
     });
     } catch (error) {
       console.error("Error generating workout:", error);
