@@ -1,0 +1,489 @@
+{
+  "info": {
+    "name": "AI Fitness Coach API",
+    "description": "Complete API collection for the AI Fitness Coach backend featuring workout generation, nutrition planning, progress tracking, and AI-powered features.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "version": "2.0.0"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8000",
+      "type": "string"
+    },
+    {
+      "key": "session_id",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Health Check",
+      "item": [
+        {
+          "name": "Get Health Status",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/health",
+              "host": ["{{base_url}}"],
+              "path": ["health"]
+            },
+            "description": "Check if the API is running and all dependencies are available"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Core Fitness Features",
+      "item": [
+        {
+          "name": "Generate Workout Plan",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"weight\": 70.5,\n  \"height\": 175,\n  \"gender\": 1,\n  \"age\": 30,\n  \"hypertension\": \"no\",\n  \"diabetes\": \"no\",\n  \"fitness_goal\": \"build muscle\",\n  \"workout_preference\": \"strength training\",\n  \"workout_location\": \"gym\",\n  \"duration\": \"45 minutes\",\n  \"experience_level\": \"intermediate\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/generate-workout",
+              "host": ["{{base_url}}"],
+              "path": ["generate-workout"]
+            },
+            "description": "Generate a personalized workout plan based on user profile and preferences"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    const response = pm.response.json();",
+                  "    if (response.session_id) {",
+                  "        pm.collectionVariables.set('session_id', response.session_id);",
+                  "    }",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Generate Nutrition Plan",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"weight\": 70.5,\n  \"height\": 175,\n  \"gender\": 1,\n  \"age\": 30,\n  \"hypertension\": \"no\",\n  \"diabetes\": \"no\",\n  \"fitness_goal\": \"build muscle\",\n  \"workout_preference\": \"strength training\",\n  \"workout_location\": \"gym\",\n  \"duration\": \"45 minutes\",\n  \"experience_level\": \"intermediate\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/generate-nutrition",
+              "host": ["{{base_url}}"],
+              "path": ["generate-nutrition"]
+            },
+            "description": "Generate a personalized nutrition plan based on user profile"
+          }
+        },
+        {
+          "name": "Handle User Concerns",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"concern\": \"I'm feeling sore after yesterday's workout\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/user-concerns/{{session_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["user-concerns", "{{session_id}}"]
+            },
+            "description": "Address user concerns and provide personalized advice"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Session Management",
+      "item": [
+        {
+          "name": "Get Session Data",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/session/{{session_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["session", "{{session_id}}"]
+            },
+            "description": "Retrieve session data and user information"
+          }
+        },
+        {
+          "name": "Delete Session",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/session/{{session_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["session", "{{session_id}}"]
+            },
+            "description": "Delete a user session and all associated data"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Progress Tracking",
+      "item": [
+        {
+          "name": "Log Workout Progress",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"date\": \"2025-12-24\",\n  \"exercise\": \"Bench Press\",\n  \"sets\": 3,\n  \"reps\": 10,\n  \"weight\": 80.0,\n  \"duration\": 45,\n  \"notes\": \"Felt strong today\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/progress/workout/{{session_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["progress", "workout", "{{session_id}}"]
+            },
+            "description": "Log a completed workout session"
+          }
+        },
+        {
+          "name": "Log Body Measurements",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"date\": \"2025-12-24\",\n  \"weight\": 70.5,\n  \"measurements\": {\n    \"chest\": 100,\n    \"waist\": 80,\n    \"hips\": 95\n  },\n  \"notes\": \"Monthly measurement\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/progress/measurement/{{session_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["progress", "measurement", "{{session_id}}"]
+            },
+            "description": "Log body measurements and weight"
+          }
+        },
+        {
+          "name": "Get Progress History",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/progress/{{session_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["progress", "{{session_id}}"]
+            },
+            "description": "Retrieve user's progress history and analytics"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Nutrition & Meal Planning",
+      "item": [
+        {
+          "name": "Generate Meal Plan",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"dietary_restrictions\": [\"gluten-free\"],\n  \"cuisine_preferences\": [\"mediterranean\", \"asian\"],\n  \"meals_per_day\": 3,\n  \"calories_per_day\": 2200\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/meal-plan/{{session_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["meal-plan", "{{session_id}}"]
+            },
+            "description": "Generate a personalized meal plan with recipes"
+          }
+        }
+      ]
+    },
+    {
+      "name": "AI-Powered Features",
+      "item": [
+        {
+          "name": "Voice Coaching",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"command\": \"I need help with my squat form\",\n  \"audio_data\": null\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/ai/voice-coach/{{session_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["ai", "voice-coach", "{{session_id}}"]
+            },
+            "description": "Get voice-powered workout coaching and form feedback"
+          }
+        },
+        {
+          "name": "Progress Photo Analysis",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"photo_data\": \"base64_encoded_image_data_here\",\n  \"photo_type\": \"progress\",\n  \"date\": \"2025-12-24\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/ai/progress-photo/{{session_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["ai", "progress-photo", "{{session_id}}"]
+            },
+            "description": "Analyze progress photos for visual feedback"
+          }
+        },
+        {
+          "name": "Mood-Based Coaching",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"mood\": \"tired\",\n  \"energy_level\": 3,\n  \"stress_level\": 7\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/ai/mood-coaching/{{session_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["ai", "mood-coaching", "{{session_id}}"]
+            },
+            "description": "Get mood-adaptive training recommendations"
+          }
+        },
+        {
+          "name": "AI Companion Chat",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"message\": \"I'm struggling with motivation today\",\n  \"companion_personality\": \"motivational\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/ai/companion-chat/{{session_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["ai", "companion-chat", "{{session_id}}"]
+            },
+            "description": "Chat with AI companion with different personalities"
+          }
+        },
+        {
+          "name": "Performance Prediction",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            },
+            "url": {
+              "raw": "{{base_url}}/ai/predict-performance/{{session_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["ai", "predict-performance", "{{session_id}}"]
+            },
+            "description": "Get AI-powered performance predictions and analytics"
+          }
+        },
+        {
+          "name": "Smart Goal Setting",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            },
+            "url": {
+              "raw": "{{base_url}}/ai/smart-goals/{{session_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["ai", "smart-goals", "{{session_id}}"]
+            },
+            "description": "Generate smart goals with dynamic adjustments"
+          }
+        },
+        {
+          "name": "Real-time Workout Feedback",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"exercise\": \"Bench Press\",\n  \"sets_completed\": 2,\n  \"reps_completed\": 8,\n  \"weight_used\": 75.0,\n  \"perceived_difficulty\": 7,\n  \"form_quality\": \"good\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/ai/realtime-feedback/{{session_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["ai", "realtime-feedback", "{{session_id}}"]
+            },
+            "description": "Get real-time workout feedback and coaching"
+          }
+        },
+        {
+          "name": "Motivational Content",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"content_type\": \"quote\",\n  \"theme\": \"strength\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/ai/motivational-content/{{session_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["ai", "motivational-content", "{{session_id}}"]
+            },
+            "description": "Generate personalized motivational content"
+          }
+        },
+        {
+          "name": "Workout Companion",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            },
+            "url": {
+              "raw": "{{base_url}}/ai/workout-companion/{{session_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["ai", "workout-companion", "{{session_id}}"]
+            },
+            "description": "Get AI workout companion features"
+          }
+        },
+        {
+          "name": "Generate Workout Video Concept",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"workout_type\": \"HIIT\",\n  \"duration\": 30,\n  \"intensity\": \"moderate\",\n  \"equipment\": [\"dumbbells\", \"mat\"]\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/ai/generate-workout-video/{{session_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["ai", "generate-workout-video", "{{session_id}}"]
+            },
+            "description": "Generate AI workout video concepts"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Admin Functions",
+      "item": [
+        {
+          "name": "Clear Cache",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/admin/clear-cache",
+              "host": ["{{base_url}}"],
+              "path": ["admin", "clear-cache"]
+            },
+            "description": "Clear the AI response cache (admin function)"
+          }
+        }
+      ]
+    }
+  ]
+}
